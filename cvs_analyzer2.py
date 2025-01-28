@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sat Jan 25 23:21:52 2025
+Created on Sat Jan 25 22:46:39 2025
 
 @author: beniv
 """
-
-from openpyxl.styles import numbers
 import os
 import pandas as pd
 from datetime import datetime
@@ -33,7 +31,7 @@ def load_classifications(filename):
     Loads classifications from a TXT file into a dictionary.
     """
     classifications = {}
-    if os.path.exists(filename): #important
+    if os.path.exists(filename):
         with open(filename, "r", encoding="utf-8") as file:
             current_category = None
             for line in file:
@@ -261,14 +259,14 @@ def remove_duplicate_lines(filename):
 # Main function
 def main():
     # Get user input for directory, column numbers, phrase, and classifications file
-    directory =  input("Enter the directory containing Excel files: ").strip()
-    expense_name_col =  int(input("Enter the column number for expense descriptions (e.g., 4): ").strip())
-    amount_col =  int(input("Enter the column number for expense amounts (e.g., 5): ").strip())
-    date_col =  int(input("Enter the column number for expense dates (e.g., 3): ").strip())
-    phrase = input("Enter the phrase to search for in the Excel files: ").strip()
-   # saver= input("Enter the directory you want the Excel summary file to be saved ").strip()
+    directory = 'maya'  # input("Enter the directory containing Excel files: ").strip()
+    expense_name_col = 4  # int(input("Enter the column number for expense descriptions (e.g., 4): ").strip())
+    amount_col = 5  # int(input("Enter the column number for expense amounts (e.g., 5): ").strip())
+    date_col = 3  # int(input("Enter the column number for expense dates (e.g., 3): ").strip())
+    phrase = 'פירוט עבור הכרטיסים בארץ'  # input("Enter the phrase to search for in the Excel files: ").strip()
+
     # Load classifications from a TXT file if provided
-    classifications_file =  input("Enter the path to the classifications file (press Enter to skip): ").strip()
+    classifications_file = 'expense_summary1.txt'  # input("Enter the path to the classifications file (press Enter to skip): ").strip()
     classifications = load_classifications(classifications_file) if classifications_file else {}
 
     try:
@@ -277,31 +275,10 @@ def main():
             directory, expense_name_col, amount_col, date_col, phrase, classifications
         )
 
-        # Round the numbers to the nearest whole number and convert to integers
-        summary_df["Total Amount"] = summary_df["Total Amount"].round().astype(int)
-        detailed_df["Amount"] = detailed_df["Amount"].round().astype(int)
-
         # Save results to Excel files
-        with pd.ExcelWriter("expense_summary.xlsx", engine='openpyxl') as writer:
-            # Write the summary sheet
+        with pd.ExcelWriter("expense_summary.xlsx") as writer:
             summary_df.to_excel(writer, sheet_name="Summary", index=False)
-            # Write the detailed breakdown sheet
             detailed_df.to_excel(writer, sheet_name="Detailed Breakdown", index=False)
-
-            # Access the workbook and worksheet for formatting
-            workbook = writer.book
-            summary_sheet = writer.sheets["Summary"]
-            detailed_sheet = writer.sheets["Detailed Breakdown"]
-
-            # Apply custom number formatting to the "Total Amount" column in the Summary sheet
-            for row in summary_sheet.iter_rows(min_row=2, min_col=2, max_col=2):  # Column B (Total Amount)
-                for cell in row:
-                    cell.number_format = '#,##0'  # Custom format: 1000 separator, no decimals
-
-            # Apply custom number formatting to the "Amount" column in the Detailed Breakdown sheet
-            for row in detailed_sheet.iter_rows(min_row=2, min_col=4, max_col=4):  # Column D (Amount)
-                for cell in row:
-                    cell.number_format = '#,##0'  # Custom format: 1000 separator, no decimals
 
         # Create a summary TXT file
         create_summary_txt(category_expenses)
@@ -312,7 +289,8 @@ def main():
         print("\nExpense summary and detailed breakdown saved to 'expense_summary.xlsx'.")
         print("Expense classifications saved to 'expense_summary.txt'.")
     except Exception as e:
-        print(f"An error occurred: {e}")        
+        print(f"An error occurred: {e}")
+
 # Run the script
 if __name__ == "__main__":
     main()
