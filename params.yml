@@ -1,10 +1,12 @@
-input:
-  orogin: 'maya_expenses'
-  expense_name_col: '3' #column number for expense descriptions (e.g., 4)
-  amount_col: '4' #Enter the column number for expense amounts (e.g., 5)
-  date_col: '5' #Enter the column number for expense dates (e.g., 3)
-  phrase: 'פירוט הוצאות בארץ' #Enter the phrase to search for in the Excel files
+going_in:
+  origin: "exp"
+  expense_name_col: "3" #column number for expense descriptions (e.g., 4)
+  amount_col: "4" #Enter the column number for expense amounts (e.g., 5)
+  date_col: "5" #Enter the column number for expense dates (e.g., 3)
+  phrase: "" #Enter the phrase to search for in the Excel files פירוט עבור כרטיסים בארץ
+  expense_ctegories: "maya_expenses/expense_summary.txt"
 
-output:
-  saver: 'maya_expenses/results' #Enter the directory you want the Excel summary file to be saved 
-
+going_out:
+  save_place: "exp/results/" #Enter the directory you want the Excel summary file to be saved 
+  summary_txt_name: "expense_summary.txt" #Enter the name of the summary text file
+  summary_xlsx_name: "expense_summary.xlsx" #Enter the name of the summary Excel file

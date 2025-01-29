@@ -227,7 +227,7 @@ def process_excel_files(directory, expense_name_col, amount_col, date_col, phras
     return summary_df, detailed_df, all_category_expenses, classifications
 
 # Function to create a summary TXT file
-def create_summary_txt(category_expenses, filename="expense_summary.txt"):
+def create_summary_txt(category_expenses, filename):
     """
     Creates a TXT file summarizing all expense names under their classifications,
     with an empty line separating each category.
@@ -261,21 +261,25 @@ def remove_duplicate_lines(filename):
 
 # Main function
 def main():
-    # Get user input for directory, column numbers, phrase, and classifications file
-    with open('paramsfile.yml', 'r') as file:
-    params = yaml.safe_load(file)
+    # Get input for directory, column numbers, phrase, and classifications file, from params.yml
+    with open('params.yml', 'r',encoding='utf-8') as file:
+        params = yaml.safe_load(file)
     
-    directory = params[input][origin]  
-    expense_name_col =  int(input("Enter the column number for expense name (e.g., 4): ").strip())
-    amount_col =  int(input("Enter the column number for expense amounts (e.g., 5): ").strip())
-    date_col =  int(input("Enter the column number for expense dates (e.g., 3): ").strip())
-    phrase = input("Enter the phrase to search for in the Excel files: ").strip()
-   # saver= input("Enter the directory you want the Excel summary file to be saved ").strip()
+    directory = params['going_in']['origin']  
+    expense_name_col =  params['going_in']['expense_name_col']
+    amount_col =  params['going_in']['amount_col']
+    date_col = params['going_in']['date_col']
+    phrase = params['going_in']['phrase']
     
+    expense_summary_place= params['going_out']['save_place']
+    summary_txt_name= params['going_out']['summary_txt_name']
+    summary_xlsx_name= params['going_out']['summary_xlsx_name']
+
     # Load classifications from a TXT file if provided
-    classifications_file =  input("Enter the path to the classifications file (press Enter to skip): ").strip()
+    classifications_file = params['going_in']['expense_ctegories']
     classifications = load_classifications(classifications_file) if classifications_file else {}
 
+    #
     try:
         # Process Excel files
         summary_df, detailed_df, category_expenses, classifications = process_excel_files(
@@ -287,7 +291,8 @@ def main():
         detailed_df["Amount"] = detailed_df["Amount"].round().astype(int)
 
         # Save results to Excel files
-        with pd.ExcelWriter("expense_summary.xlsx", engine='openpyxl') as writer:
+        
+        with pd.ExcelWriter(os.path.join(expense_summary_place+summary_xlsx_name), engine='openpyxl') as writer:
             # Write the summary sheet
             summary_df.to_excel(writer, sheet_name="Summary", index=False)
             # Write the detailed breakdown sheet
@@ -309,7 +314,7 @@ def main():
                     cell.number_format = '#,##0'  # Custom format: 1000 separator, no decimals
 
         # Create a summary TXT file
-        create_summary_txt(category_expenses)
+        create_summary_txt(category_expenses, os.path.join(expense_summary_place+summary_txt_name))
 
         # Remove duplicate lines from the summary TXT file
         remove_duplicate_lines("expense_summary.txt")

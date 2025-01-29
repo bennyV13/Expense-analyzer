@@ -1,6 +1,0 @@
-maya
-D
-C
-E
-פירוט עבור הכרטיסים בארץ
-expense_summary.txt
