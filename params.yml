@@ -1,0 +1,10 @@
+input:
+  orogin: 'maya_expenses'
+  expense_name_col: '3' #column number for expense descriptions (e.g., 4)
+  amount_col: '4' #Enter the column number for expense amounts (e.g., 5)
+  date_col: '5' #Enter the column number for expense dates (e.g., 3)
+  phrase: 'פירוט הוצאות בארץ' #Enter the phrase to search for in the Excel files
+
+output:
+  saver: 'maya_expenses/results' #Enter the directory you want the Excel summary file to be saved 
+

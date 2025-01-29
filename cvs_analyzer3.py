@@ -9,6 +9,7 @@ from openpyxl.styles import numbers
 import os
 import pandas as pd
 from datetime import datetime
+import yaml 
 
 # Function to format date as DD/MM/YY
 def format_date(date):
@@ -261,12 +262,16 @@ def remove_duplicate_lines(filename):
 # Main function
 def main():
     # Get user input for directory, column numbers, phrase, and classifications file
-    directory =  input("Enter the directory containing Excel files: ").strip()
-    expense_name_col =  int(input("Enter the column number for expense descriptions (e.g., 4): ").strip())
+    with open('paramsfile.yml', 'r') as file:
+    params = yaml.safe_load(file)
+    
+    directory = params[input][origin]  
+    expense_name_col =  int(input("Enter the column number for expense name (e.g., 4): ").strip())
     amount_col =  int(input("Enter the column number for expense amounts (e.g., 5): ").strip())
     date_col =  int(input("Enter the column number for expense dates (e.g., 3): ").strip())
     phrase = input("Enter the phrase to search for in the Excel files: ").strip()
    # saver= input("Enter the directory you want the Excel summary file to be saved ").strip()
+    
     # Load classifications from a TXT file if provided
     classifications_file =  input("Enter the path to the classifications file (press Enter to skip): ").strip()
     classifications = load_classifications(classifications_file) if classifications_file else {}
