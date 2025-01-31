@@ -259,14 +259,14 @@ def remove_duplicate_lines(filename):
 # Main function
 def main():
     # Get user input for directory, column numbers, phrase, and classifications file
-    directory = 'maya'  # input("Enter the directory containing Excel files: ").strip()
-    expense_name_col = 4  # int(input("Enter the column number for expense descriptions (e.g., 4): ").strip())
-    amount_col = 5  # int(input("Enter the column number for expense amounts (e.g., 5): ").strip())
-    date_col = 3  # int(input("Enter the column number for expense dates (e.g., 3): ").strip())
-    phrase = 'פירוט עבור הכרטיסים בארץ'  # input("Enter the phrase to search for in the Excel files: ").strip()
+    directory = 'benny_expenses'  # input("Enter the directory containing Excel files: ").strip()
+    expense_name_col = 2  # int(input("Enter the column number for expense descriptions (e.g., 4): ").strip())
+    amount_col = 3  # int(input("Enter the column number for expense amounts (e.g., 5): ").strip())
+    date_col = 1  # int(input("Enter the column number for expense dates (e.g., 3): ").strip())
+    phrase = 'פירוט עסקאות לבנימין ורדמן לחשבון יהב 232191 לכרטיס ויזה 9277'  # input("Enter the phrase to search for in the Excel files: ").strip()
 
     # Load classifications from a TXT file if provided
-    classifications_file = 'expense_summary1.txt'  # input("Enter the path to the classifications file (press Enter to skip): ").strip()
+    classifications_file = ''  # input("Enter the path to the classifications file (press Enter to skip): ").strip()
     classifications = load_classifications(classifications_file) if classifications_file else {}
 
     try:
