@@ -160,8 +160,8 @@ def process_single_file(filepath, expense_name_col, amount_col, date_col, phrase
         print(f"DataFrame Head:\n{df.head()}")
 
         # Ensure the required columns exist
-        required_columns = [expense_name_col, amount_col, date_col]
-        if all(col <= len(df.columns) for col in required_columns):  # Check if column numbers are valid
+        required_columns = [int(expense_name_col),int(amount_col), int(date_col)]
+        if all(isinstance(col, int) and col <= len(df.columns) for col in required_columns):  # Check if column numbers are valid
             # Classify expenses
             summary, detailed_results, category_expenses, classifications = classify_expenses(
                 df,
@@ -317,7 +317,7 @@ def main():
         create_summary_txt(category_expenses, os.path.join(expense_summary_place+summary_txt_name))
 
         # Remove duplicate lines from the summary TXT file
-        remove_duplicate_lines("expense_summary.txt")
+        remove_duplicate_lines(os.path.join(expense_summary_place+summary_txt_name))
 
         print("\nExpense summary and detailed breakdown saved to 'expense_summary.xlsx'.")
         print("Expense classifications saved to 'expense_summary.txt'.")

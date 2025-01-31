@@ -1,12 +1,13 @@
 going_in:
-  origin: "exp"
-  expense_name_col: "3" #column number for expense descriptions (e.g., 4)
-  amount_col: "4" #Enter the column number for expense amounts (e.g., 5)
-  date_col: "5" #Enter the column number for expense dates (e.g., 3)
-  phrase: "" #Enter the phrase to search for in the Excel files פירוט עבור כרטיסים בארץ
-  expense_ctegories: "maya_expenses/expense_summary.txt"
+  origin: "benny_expenses"
+  date_col: 1         #Enter the column number for expense dates (e.g., 3)
+  expense_name_col: 2 #column number for expense descriptions (e.g., 4)
+  amount_col: 3       #Enter the column number for expense amounts (e.g., 5)
+  phrase: "פירוט עסקאות לבנימין ורדמן לחשבון יהב 232191 לכרטיס ויזה 9277" #Enter the phrase to search for in the Excel files פירוט עבור כרטיסים בארץ
+  offset_from_phrase: "1" #not implemented yet
+  expense_ctegories: ""
 
 going_out:
-  save_place: "exp/results/" #Enter the directory you want the Excel summary file to be saved 
+  save_place: "" #Enter the directory you want the Excel summary file to be saved 
   summary_txt_name: "expense_summary.txt" #Enter the name of the summary text file
   summary_xlsx_name: "expense_summary.xlsx" #Enter the name of the summary Excel file
