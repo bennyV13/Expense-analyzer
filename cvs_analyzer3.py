@@ -10,7 +10,7 @@ import os
 import pandas as pd
 from datetime import datetime
 import yaml 
-
+skips=0
 # Function to format date as DD/MM/YY
 def format_date(date):
     """
@@ -66,7 +66,7 @@ def classify_expenses(df, expense_name_col, amount_col, date_col, classification
     results = []  # Stores detailed results
     summary = {}  # Stores summary of expenses by category
     last_expense = None  # Stores the last classified expense for "back" functionality
-
+    global skips
     for index, row in df.iterrows():
         expense_name = row[expense_name_col - 1]  # Convert to 0-based index
         amount = row[amount_col - 1]              # Convert to 0-based index
@@ -77,14 +77,18 @@ def classify_expenses(df, expense_name_col, amount_col, date_col, classification
         print(f"Expense Name: {expense_name}")
         print(f"Amount: {amount}")
         print(f"Date: {date}")
+        if index==263:
+            print("Stop here")
 
         # Skip rows with missing or invalid dates
         if date is None:
+            skips=skips+1
             print("Skipping row: Invalid date.")
             continue
 
         # Skip rows with missing expense names
         if pd.isna(expense_name):
+            skips=skips+1
             print("Skipping row: Missing expense name.")
             continue
 
@@ -278,7 +282,6 @@ def main():
     # Load classifications from a TXT file if provided
     classifications_file = params['going_in']['expense_ctegories']
     classifications = load_classifications(classifications_file) if classifications_file else {}
-
     #
     try:
         # Process Excel files
@@ -321,6 +324,7 @@ def main():
 
         print("\nExpense summary and detailed breakdown saved to 'expense_summary.xlsx'.")
         print("Expense classifications saved to 'expense_summary.txt'.")
+        print("\n Number of lines skipped:",skips)
     except Exception as e:
         print(f"An error occurred: {e}")        
 # Run the script
