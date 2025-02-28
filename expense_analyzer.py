@@ -326,7 +326,9 @@ def main():
         print("Expense classifications saved to 'expense_summary.txt'.")
         print("\n Number of lines skipped:",skips)
     except Exception as e:
-        print(f"An error occurred: {e}")        
+        print(f"An error occurred: {e}")    
+        
+            
 # Run the script
 if __name__ == "__main__":
     main()
