@@ -5,6 +5,20 @@ Created on Sat Jan 25 23:21:52 2025
 @author: beniv
 """
 
+"""
+There's a folder (or memory place online) with multiple files containing expense data in Excel format (SQL if online).
+Pseudo code:
+1. Read the Excel files from the folder (or memory place online).
+2. Pull data from first file
+3. Pull classifications already existing (i.e. CF)
+4. Start going through the data and classify the expenses by CF.
+    5. If not classified, prompt user to classify the expense
+    6. Add the classification to the CF and print to CF file
+7. Sum the expenses 
+8. Save the summary to a Excel file
+9. Save the detailed breakdown to a Excel file
+"""
+
 from openpyxl.styles import numbers
 import os
 import pandas as pd
@@ -46,16 +60,6 @@ def load_classifications(filename):
                     classifications[expense_name] = current_category
     return classifications
 
-# Function to find the starting row after a specific phrase
-def find_start_row(filepath, phrase):
-    """
-    Finds the starting row (two rows after the specified phrase) in an Excel file.
-    """
-    df = pd.read_excel(filepath, header=None)  # Read the file without headers
-    for index, row in df.iterrows():
-        if any(phrase in str(cell) for cell in row):  # Check if the phrase exists in the row
-            return index + 2  # Start two rows after the phrase (index is zero-based)
-    return 0  # Default to row 0 if the phrase is not found
 
 # Function to classify expenses
 def classify_expenses(df, expense_name_col, amount_col, date_col, classifications):
