@@ -9,7 +9,9 @@ Created on Sat Jan 25 23:21:52 2025
 There's a folder (or memory place online) with multiple files containing expense data in Excel format (SQL if online).
 Pseudo code:
 1. Read the Excel files from the folder (or memory place online).
+    1.1 how files should be built? nothing but the expenses. 
 2. Pull data from first file
+    2.1 how to handle empty lines? skip them 
 3. Pull classifications already existing (i.e. CF)
 4. Start going through the data and classify the expenses by CF.
     5. If not classified, prompt user to classify the expense
@@ -17,6 +19,10 @@ Pseudo code:
 7. Sum the expenses 
 8. Save the summary to a Excel file
 9. Save the detailed breakdown to a Excel file
+
+Need a function for each of the above steps
+Write it directly for online use?
+Might be the same if I use docker
 """
 
 from openpyxl.styles import numbers
